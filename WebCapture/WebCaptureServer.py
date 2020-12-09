@@ -3,10 +3,9 @@ import http.server
 PORT = 8888
 server_address = ("", PORT)
 
-server = http.server.HTTPServer
 handler = http.server.CGIHTTPRequestHandler
-handler.cgi_directories = ["/"]
-print("Server started, you can access it on http://%s:%d/index.py" % ("localhost", PORT))
+handler.cgi_directories = ["/cgi"]
 
-httpd = server(server_address, handler)
-httpd.serve_forever()
+with http.server.HTTPServer(("", PORT), handler) as httpd:
+    print("Server started, you can access it on http://%s:%d/index.py" % ("localhost", PORT))
+    httpd.serve_forever()
